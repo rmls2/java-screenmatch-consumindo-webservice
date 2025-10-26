@@ -27,17 +27,16 @@ public class OmdebApi {
         return response.body();
     }
 
-    public static TituloOmdb serializaJson(String json){
-        Gson gson = new GsonBuilder()
+    public static void writeMovies(String arquivoPath, List<Titulo> meusTitulos, Gson gson) throws IOException {
+        FileWriter escrita = new FileWriter(arquivoPath);
+        escrita.write(gson.toJson(meusTitulos));
+        escrita.close();
+    }
+
+    public static Gson gsonBuilder(){
+        return new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
                 .setPrettyPrinting()
                 .create();
-        return gson.fromJson(json, TituloOmdb.class);
-    }
-
-    public static void writeMovies(String arquivoPath, List<Titulo> meusTitulos) throws IOException {
-        FileWriter escrita = new FileWriter(arquivoPath);
-        escrita.write(meusTitulos.toString());
-        escrita.close();
     }
 }
